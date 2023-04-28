@@ -6,6 +6,7 @@ S = 0
 while (Q % 2 == 0):
 	S += 1
 	Q >>= 1
+# After this, Q_new = (2**S)*Some_Odd 
 
 z = 1
 while (pow(z, (p - 1)//2, p) != p-1): z += 1
@@ -23,5 +24,6 @@ while (t > 1):
 	c = pow(b, 2, p)
 	t = t * b**2 % p
 	R = R * b % p
+
 # print out the smaller of two root
 print(min(R, p - R))

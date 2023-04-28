@@ -1,3 +1,4 @@
+from matrix_SOLVED import matrix2bytes
 def shift_rows(s):
     s[0][1], s[1][1], s[2][1], s[3][1] = s[1][1], s[2][1], s[3][1], s[0][1]
     s[0][2], s[1][2], s[2][2], s[3][2] = s[2][2], s[3][2], s[0][2], s[1][2]
@@ -5,8 +6,13 @@ def shift_rows(s):
 
 
 def inv_shift_rows(s):
-    ???
-
+    for col in range(1, 4):
+        temp = []
+        for row in range(4):
+            temp.append(s[(row - col) % 4][col])
+        for row in range(4):
+            s[row][col] = temp[row] 
+    
 
 # learned from http://cs.ucsb.edu/~koc/cs178/projects/JT/aes.c
 xtime = lambda a: (((a << 1) ^ 0x1B) & 0xFF) if (a & 0x80) else (a << 1)
@@ -47,3 +53,7 @@ state = [
     [94, 79, 8, 54],
 ]
 
+inv_mix_columns(state)
+inv_shift_rows(state)
+
+print(matrix2bytes(state))
