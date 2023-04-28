@@ -9,7 +9,8 @@ send_flag = {
     "option": "get_flag"
 }
 
-
+# idea was the current time what taking int(time.time()) which was taking the number of second
+# Therefore just be quick enough for it not to change -> two time pad
 def json_recv():
     line = r.recv()
     print(line)
@@ -40,7 +41,7 @@ pad = bytes.fromhex("ff"*len(flag))
 
 r.close()
 
-print(xor(flag, xor(pad, temp)))
+print(xor(flag, pad, temp))
 
 
 
