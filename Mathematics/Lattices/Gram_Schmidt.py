@@ -17,4 +17,3 @@ for  in range():
         muy[i][j] = (v[j] * u[j]) / (u[j].norm() ** 2)
     
     u.append(v[i] - sum(muy[j][i] * u[i] for i in range(j)))
-
