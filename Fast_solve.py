@@ -1,0 +1,28 @@
+from sage.all import *
+from Crypto.Util.number import GCD
+import dc
+data = {"p": "0xffffffffffffffffc90fdaa22168c234c4c6628b80dc1cd129024e088a67cc74020bbea63b139b22514a08798e3404ddef9519b3cd3a431b302b0a6df25f14374fe1356d6d51c245e485b576625e7ec6f44c42e9a637ed6b0bff5cb6f406b7edee386bfb5a899fa5ae9f24117c4b1fe649286651ece45b3dc2007cb8a163bf0598da48361c55d39a69163fa8fd24cf5f83655d23dca3ad961c62f356208552bb9ed529077096966d670c354e4abc9804f1746c08ca237327ffffffffffffffff", "g": "0x02", "A": "0x5cc2274a3e3b3c84a265034e23f85655eefb910dc656773d66ca42073205167f4b016de05e540c95c89db76cbbcd69f6d9ca545edef4f5cf92c9aaf8b4b8d01854740bf9c891d4392fb73b8272f97af8ffc0b6bd8bebdea4938b7c57baa52cb46cdad2bdee9fa45095f3c0dc3a73dab9563b6dd09b1f48fbf45e74b6666e0b497d516ecfe240e5f808bae5d9cfea419ae5c64609c702a9e0b0bf17dfc4c0d99ae6c1f7d1c0dc4c72809fdfa691a6654d40107f6e910bceba2b56ec6b844ecac9"}
+p = int(data['p'][2:], 16)
+A = int(data['A'][2:], 16)
+g = int(data['g'][2:], 16)
+
+
+c = 10
+while (GCD(c, p - 1) > 1):
+    c += 1
+c_inv = inverse_mod(c, p - 1)
+print(c_inv)
+print(hex(pow(g, c, p)))
+# assert False
+
+B = int({"B": "0x8d79b69390f639501d81bdce911ec9defb0e93d421c02958c8c8dd4e245e61ae861ef9d32aa85dfec628d4046c403199297d6e17f0c9555137b5e8555eb941e8dcfd2fe5e68eecffeb66c6b0de91eb8cf2fd0c0f3f47e0c89779276fa7138e138793020c6b8f834be20a16237900c108f23f872a5f693ca3f93c3fd5a853dfd69518eb4bab9ac2a004d3a11fb21307149e8f2e1d8e1d7c85d604aa0bee335eade60f191f74ee165cd4baa067b96385aa89cbc7722e7426522381fc94ebfa8ef0"}['B'][2:], 16)
+
+data = {"iv": "1f65e12874f86f9bef3aabd938ac59bc", "encrypted": "189cc633a193bd238b1ae11363f522c813eafdb12750510737664fcad3450e72"}
+data_tmp = {"iv": "eea1e014187bb3ef179f53d62331eaa2", "encrypted": "ed438097351f144560e779818fc88aaad1b5b262d28be94b497bff0d0e4cf6e92aba1b5d6f292921d462c3df01e5481361b6ec23c90a1f28b49b0aa9317422cbb8e5b349b8fe775585283d9703f0b585"}
+# R = IntegerModRing(p)
+# a = R(discrete_log(R(A), R(g)))
+# print(a)
+# p = int('ffffffffffffffffc90fdaa22168c234c4c6628b80dc1cd129024e088a67cc74020bbea63b139b22514a08798e3404ddef9519b3cd3a431b302b0a6df25f14374fe1356d6d51c245e485b576625e7ec6f44c42e9a637ed6b0bff5cb6f406b7edee386bfb5a899fa5ae9f24117c4b1fe649286651ece45b3dc2007cb8a163bf0598da48361c55d39a69163fa8fd24cf5f83655d23dca3ad961c62f356208552bb9ed529077096966d670c354e4abc9804f1746c08ca237327ffffffffffffffff', 16)
+# B = R(B)
+shared_secret = pow(B, c, p)
+print(dc.decrypt_flag(shared_secret, *data_tmp.values()))
