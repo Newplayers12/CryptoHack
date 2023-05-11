@@ -8,13 +8,7 @@ c2 = 143869971386379788607482789869450986485071428645841111242025803651037931658
 E = e1 * e2
 
 
-Q = ( pow(c1,e2, N) * pow(2, -E, N) - pow(5, -E, N) * pow(c2, e1, N) ) 
-# other = 3 * pow(2, -1, N) - 7 * pow(5, -1, N)
-# Q = Q * pow(other, -E, N)
-
-print(math.gcd(Q, N))
-q = math.gcd(Q, N)
-print(N % q == 0)
+Q = """MAGIC"""
 print(N // q)
 
 
