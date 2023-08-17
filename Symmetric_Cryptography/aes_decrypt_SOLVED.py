@@ -1,3 +1,7 @@
+from diffusion_SOLVED import inv_shift_rows, inv_mix_columns
+from add_round_key_SOLVED import add_round_key
+from matrix_SOLVED import matrix2bytes, bytes2matrix
+from sbox_SOLVED import inv_s_box, sub_bytes, s_box
 N_ROUNDS = 10
 
 key        = b'\xc3,\\\xa6\xb5\x80^\x0c\xdb\x8d\xa5z*\xb6\xfe\\'
@@ -53,19 +57,25 @@ def expand_key(master_key):
 
 def decrypt(key, ciphertext):
     round_keys = expand_key(key) # Remember to start from the last round key and work backwards through them when decrypting
-
+    
     # Convert ciphertext to state matrix
-
+    ciphertext = bytes2matrix(ciphertext)
     # Initial add round key step
-
+    result = add_round_key(ciphertext, round_keys[-1])
     for i in range(N_ROUNDS - 1, 0, -1):
+        inv_shift_rows(result)
+        result = sub_bytes(result, inv_s_box)
+        result = add_round_key(result, round_keys[i])
+        inv_mix_columns(result)
         pass # Do round
 
     # Run final round (skips the InvMixColumns step)
-
+    inv_shift_rows(result)
+    result = sub_bytes(result, inv_s_box)
+    result = add_round_key(result, round_keys[0])
     # Convert state matrix to plaintext
-
+    plaintext = matrix2bytes(result)
     return plaintext
 
 
-# print(decrypt(key, ciphertext))
+print(decrypt(key, ciphertext))
