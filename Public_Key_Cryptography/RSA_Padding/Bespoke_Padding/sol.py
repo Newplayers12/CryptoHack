@@ -19,21 +19,9 @@ A_list = []
 LEN = 10
 
 for i in range(LEN):
-    r = remote('socket.cryptohack.org', 13386)
-    r.recv()
-    json_send({"option": "get_flag"})
-    data = json_recv()
-    r.close()
-    ct = ZZ(data['encrypted_flag'])
-    N = ZZ(data['modulus'])
-    
-    a, b = map(ZZ, data['padding'])
+    # NOPE
+    pass
 
-    N_list.append(N)
-    CT_list.append(ct)
-    B_list.append(b)
-    A_list.append(a)
-    
 P = PolynomialRing(Zmod(product(N_list)), 'x')
 x = P.gen()
 
